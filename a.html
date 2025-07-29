@@ -5,19 +5,274 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Güvenli Ödeme | sahibinden.com</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="a.css" />
   <link rel="icon" href="https://www.sahibinden.com/favicon.ico" type="image/webp" />
-</head>
+  <style>
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #fafafa;
+  margin: 0;
+  padding: 40px;
+  color: #333;
+}
 
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  background: #ffde00;
+  color: black;
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: 20px;
+}
+
+.guvenli {
+  color: #00A698;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.urun-karti {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  flex: 1;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.urun {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.urun img {
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.urun-bilgi {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.urun-baslik {
+  font-weight: bold;
+  margin: 0;
+}
+
+.urun-fiyat {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.urun-aciklama {
+  color: #777;
+  font-size: 14px;
+}
+
+.siparis-ozeti {
+  width: 300px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.siparis-ozeti h3 {
+  margin-top: 0;
+}
+
+.ozet-row, .ozet-toplam {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.ozet-toplam {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+button {
+  background: #0064d0;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.guvende-kutu {
+  background: white;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.guvende-title {
+  color: #00A698;
+  font-weight: bold;
+}
+
+.guvende-detaylar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+.detaylar-link {
+  color: #0071c2;
+  cursor: pointer;
+}
+
+.geri-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #0064d0;
+  text-decoration: none;
+}
+
+/* SADECE MOBİL DÜZEN (768px altı) */
+@media (max-width: 768px) {
+  body {
+    padding: 10px !important;
+    overflow-x: hidden !important;
+  }
+  
+  .container {
+    max-width: 100% !important;
+  }
+  
+  .content {
+    display: block !important;
+  }
+  
+  .urun-karti, 
+  .siparis-ozeti {
+    width: 100% !important;
+    float: none !important;
+    margin: 0 auto 20px !important;
+  }
+  
+  .urun {
+    display: block !important;
+    text-align: center !important;
+  }
+  
+  .urun img {
+    max-width: 150px !important;
+    margin: 0 auto 10px !important;
+    display: block !important;
+    float: none !important;
+  }
+  
+  .guvende-detaylar {
+    display: block !important;
+  }
+  
+  .guvende-detaylar > * {
+    display: block !important;
+    margin-bottom: 10px !important;
+    text-align: center !important;
+  }
+}
+
+/* MOBİL ORTALAMA & KAYMA DÜZELTME */
+@media (max-width: 768px) {
+  body {
+    padding: 15px !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  .container {
+    width: 100% !important;
+    max-width: 400px !important; /* Maksimum genişlik */
+    margin: 0 auto !important;
+  }
+  
+  header, .urun-karti, 
+  .siparis-ozeti, .guvende-kutu {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+  }
+  
+  .urun {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  .urun img {
+    max-width: 200px !important;
+    height: auto !important;
+    margin: 0 auto 15px !important;
+  }
+  
+  table {
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+  
+  button {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+  
+  .guvende-detaylar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+}
+  </style>
+</head>
 <body>
   <div class="container">
     <header>
       <span class="logo">sahibinden.com</span>
       <span class="guvenli">🔒 Güvenli ödeme</span>
     </header>
-
     <h2>Sipariş detay</h2>
-
     <main class="content">
       <div class="urun-karti">
         <h3>Ürün bilgileri</h3>
@@ -30,7 +285,6 @@
           </div>
         </div>
       </div>
-
       <div class="siparis-ozeti">
         <h3>Sipariş özeti</h3>
         <div class="ozet-row">
@@ -50,7 +304,6 @@
         <button onclick="window.location.href='b.html'">Ödemeye geç</button>
       </div>
     </main>
-
     <div class="guvende-kutu">
       <span class="guvende-title">Sahibinden Param Güvende ile alışveriş daha kolay</span>
       <div class="guvende-detaylar">
@@ -59,7 +312,6 @@
         <span>↩️ Kolay iade</span>
       </div>
     </div>
-
   </div>
 </body>
 </html>

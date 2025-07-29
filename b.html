@@ -4,47 +4,221 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Güvenli Ödeme | sahibinden.com</title>
-  <link rel="stylesheet" href="b.css">
   <style>
-    /* Validation stilleri */
-    
-    .error-message {
-      color: #e74c3c;
-      font-size: 12px;
-      margin-top: 5px;
-      display: none;
-    }
-    
-    .form-group.error .error-message {
-      display: block;
-    }
-    
-    .form-group.error input,
-    .form-group.error textarea,
-    .form-group.error select {
-      border-color: #e74c3c;
-      background-color: #fdf2f2;
-    }
+/* Temel stiller */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-      background-color: white;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  line-height: 1.6;
+}
 
-    select:disabled {
-      background-color: #f5f5f5;
-      color: #999;
-    }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-    select:focus {
-      outline: none;
-      border-color: #007bff;
-    }
-  </style>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff6b35;
+}
+
+.guvenli {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.form-group textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Validation stilleri */
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none;
+}
+
+.form-group.error .error-message {
+  display: block;
+}
+
+.form-group.error input,
+.form-group.error textarea,
+.form-group.error select {
+  border-color: #e74c3c;
+  background-color: #fdf2f2;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+}
+
+select:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Sipariş özeti stilleri */
+.product-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.product-info img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.urun-baslik {
+  font-weight: 500;
+  color: #333;
+}
+
+.price-details {
+  margin-bottom: 20px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+  padding-top: 10px;
+  border-top: 2px solid #eee;
+}
+
+.pay-button {
+  width: 100%;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pay-button:hover {
+  background-color: #218838;
+}
+
+.pay-button:active {
+  transform: translateY(1px);
+}
+</style>
 </head>
 <body>
   <div class="container">
@@ -122,7 +296,7 @@
                 <option value="Çanakkale">Çanakkale</option>
                 <option value="Çankırı">Çankırı</option>
                 <option value="Çorum">Çorum</option>
-                <option value="Denizli">Denizli</option>
+                <option value="Denizli">Denizli</Denizli>
                 <option value="Diyarbakır">Diyarbakır</option>
                 <option value="Düzce">Düzce</option>
                 <option value="Edirne">Edirne</option>
@@ -144,7 +318,7 @@
                 <option value="Karaman">Karaman</option>
                 <option value="Kars">Kars</option>
                 <option value="Kastamonu">Kastamonu</option>
-                <option value="Kayseri">Kayseri</option>
+                <option value="Kayseri">Kayseri</Kayseri>
                 <option value="Kilis">Kilis</option>
                 <option value="Kırıkkale">Kırıkkale</option>
                 <option value="Kırklareli">Kırklareli</option>
@@ -152,11 +326,11 @@
                 <option value="Kocaeli">Kocaeli</option>
                 <option value="Konya">Konya</Konya>
                 <option value="Kütahya">Kütahya</option>
-                <option value="Malatya">Malatya</option>
+                <option value="Malatya">Malatya</Malatya>
                 <option value="Manisa">Manisa</Manisa>
                 <option value="Mardin">Mardin</option>
                 <option value="Mersin">Mersin</option>
-                <option value="Muğla">Muğla</option>
+                <option value="Muğla">Muğla</Muğla>
                 <option value="Muş">Muş</option>
                 <option value="Nevşehir">Nevşehir</option>
                 <option value="Niğde">Niğde</option>
@@ -164,7 +338,7 @@
                 <option value="Osmaniye">Osmaniye</option>
                 <option value="Rize">Rize</option>
                 <option value="Sakarya">Sakarya</Sakarya>
-                <option value="Samsun">Samsun</option>
+                <option value="Samsun">Samsun</Samsun>
                 <option value="Şanlıurfa">Şanlıurfa</option>
                 <option value="Siirt">Siirt</option>
                 <option value="Sinop">Sinop</Sinop>
@@ -172,11 +346,11 @@
                 <option value="Sivas">Sivas</option>
                 <option value="Tekirdağ">Tekirdağ</Tekirdağ>
                 <option value="Tokat">Tokat</option>
-                <option value="Trabzon">Trabzon</option>
+                <option value="Trabzon">Trabzon</Trabzon>
                 <option value="Tunceli">Tunceli</option>
                 <option value="Uşak">Uşak</option>
                 <option value="Van">Van</Van>
-                <option value="Yalova">Yalova</option>
+                <option value="Yalova">Yalova</Yalova>
                 <option value="Yozgat">Yozgat</Yozgat>
                 <option value="Zonguldak">Zonguldak</option>
               </select>

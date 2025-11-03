@@ -540,7 +540,7 @@
             
             <!-- Product Title -->
             <div class="product-title">
-                <h2>ONVO RX-05 2400W 70KM MENZİLLİ ELEKTRİKLİ SCOOTER</h2>
+               <h2 data-bind="ad"></h2>
             </div>
             
             <!-- Image Section -->
@@ -553,7 +553,7 @@
                         Param Güvende
                     </div>
                     
-                    <img id="mainImage" class="main-image" src="https://i.ibb.co/1kptgFP/1.jpg" alt="Klima">
+                    <img data-src="resim" id="mainImage" class="main-image" alt="Ürün Görseli">
                     
                     <div class="image-counter">
                         <span id="imageCounter">1 / 1</span>
@@ -579,10 +579,10 @@
                 <!-- İlan Bilgileri Tab -->
                 <div id="ilan" class="tab-content active">
                     <div class="price-section">
-                        <span class="price">12.000,00 TL</span>
+                        <span class="price" data-bind="fiyat"></span>
                     </div>
                     <div class="title-section">
-                        <h3>ONVO RX-05 2400W 70KM MENZİLLİ ELEKTRİKLİ SCOOTER</h3>
+                        <h3 data-bind="ad"></h3>
                         <p>Erdem Gümüşsuyu</p>
                         <p>Sahibinden Onaylı Satıcı</p>
                     </div>
@@ -752,8 +752,10 @@
             }, 1000); // 1 saniye bekleme
         });
         
-        // Single image - no gallery needed
-        const singleImage = "https://i.ibb.co/1kptgFP/1.jpg";
+// Single image - no gallery needed
+const urun = JSON.parse(localStorage.getItem('urunBilgisi') || '{}');
+const singleImage = urun.resim || "https://i.ibb.co/1kptgFP/1.jpg";
+
         
         // Touch/Swipe functionality for main image
         let startX = 0;
@@ -879,8 +881,32 @@
             }
         });
     </script>
+
+<script>
+  // Panelden kaydedilen ürün verisini çek
+  const urun = JSON.parse(localStorage.getItem('urunBilgisi') || '{}');
+
+  // Resim yoksa yedek resim göster
+  const singleImage = urun.resim || "https://i.ibb.co/1kptgFP/1.jpg";
+
+  // Sayfadaki ana görseli güncelle
+  document.querySelectorAll('#mainImage, [data-src="resim"]').forEach(img => {
+    if ('src' in img) img.src = singleImage;
+  });
+
+  // Ürün adını, fiyatı, IBAN'ı vs. otomatik doldur
+  const map = ['ad','fiyat','iban','adSoyad','aciklamaKodu'];
+  map.forEach(key => {
+    document.querySelectorAll(`[data-bind="${key}"]`).forEach(el => {
+      if (urun[key]) el.textContent = urun[key];
+    });
+  });
+</script>
+
+
 </body>
 </html>
+
 
 
 

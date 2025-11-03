@@ -883,29 +883,46 @@ const singleImage = urun.resim || "https://i.ibb.co/1kptgFP/1.jpg";
     </script>
 
 <script>
-  // Panelden kaydedilen ürün verisini çek
-  const urun = JSON.parse(localStorage.getItem('urunBilgisi') || '{}');
+(function(){
+  const KEY = 'urunBilgisi';
+  const FALLBACK_IMG = 'https://i.ibb.co/1kptgFP/1.jpg';
 
-  // Resim yoksa yedek resim göster
-  const singleImage = urun.resim || "https://i.ibb.co/1kptgFP/1.jpg";
+  // 1) Panel verisini al
+  let urun = {};
+  try { urun = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ console.error('urunBilgisi parse hatası:', e); }
 
-  // Sayfadaki ana görseli güncelle
-  document.querySelectorAll('#mainImage, [data-src="resim"]').forEach(img => {
-    if ('src' in img) img.src = singleImage;
-  });
-
-  // Ürün adını, fiyatı, IBAN'ı vs. otomatik doldur
-  const map = ['ad','fiyat','iban','adSoyad','aciklamaKodu'];
-  map.forEach(key => {
-    document.querySelectorAll(`[data-bind="${key}"]`).forEach(el => {
-      if (urun[key]) el.textContent = urun[key];
+  // 2) Doldurma fonksiyonları
+  function fillAll(){
+    // Metin alanları
+    ['ad','fiyat','iban','adSoyad','aciklamaKodu'].forEach(function(k){
+      document.querySelectorAll('[data-bind="'+k+'"]').forEach(function(el){
+        if (urun && urun[k]) el.textContent = urun[k];
+      });
     });
-  });
-</script>
+    // Resimler
+    const src = (urun && urun.resim) ? urun.resim : FALLBACK_IMG;
+    document.querySelectorAll('#mainImage, [data-src="resim"]').forEach(function(el){
+      if ('src' in el) el.src = src;
+      if ('srcset' in el) el.srcset = src;
+    });
+    // singleImage değişkeni gerekiyorsa
+    window.singleImage = src;
+  }
 
+  // 3) İlk dene
+  fillAll();
+
+  // 4) Sonradan gelen elemanlar için gözlemci (Timing sorunu çözümü)
+  const mo = new MutationObserver(function(){
+    fillAll();
+  });
+  mo.observe(document.documentElement, {childList:true, subtree:true});
+})();
+</script>
 
 </body>
 </html>
+
 
 
 

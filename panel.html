@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ürün Paneli</title>
+  <style>
+    :root { --bg:#0f172a; --card:#111827; --muted:#9ca3af; --text:#e5e7eb; --acc:#3b82f6; }
+    * { box-sizing: border-box }
+    body{
+      margin:0; min-height:100dvh; display:grid; place-items:center;
+      background: radial-gradient(80vw 80vh at 50% 10%, #111827 0%, #0b1120 60%, #000 100%), var(--bg);
+      color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+    }
+    .card{
+      width:min(600px,94vw); background:linear-gradient(180deg,#0b1222 0%, #0b0f18 100%);
+      border:1px solid #1f2937; border-radius:16px; padding:24px; box-shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+    h1{margin:0 0 6px; font-size:20px; font-weight:700}
+    p.sub{margin:0 0 18px; color:var(--muted); font-size:13px}
+    .grid{display:grid; gap:14px}
+    label{display:block; font-size:13px; color:#cbd5e1; margin:2px 0 6px}
+    input{
+      width:100%; padding:12px 14px; border-radius:10px; border:1px solid #243244;
+      background:#0a1220; color:var(--text); outline:none; font-size:14px;
+    }
+    input::placeholder{color:#64748b}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    .btns{display:flex; gap:10px; margin-top:12px}
+    button{
+      flex:1; padding:12px 14px; border-radius:10px; border:1px solid #1f2a3a;
+      background:var(--acc); color:white; font-weight:600; cursor:pointer;
+    }
+    button.sec{background:#0b1220}
+    .status{margin-top:10px; font-size:13px}
+    .preview{
+      margin-top:16px; padding:14px; border:1px dashed #233046; border-radius:12px; background:#0a1324;
+      display:grid; grid-template-columns:96px 1fr; gap:14px; align-items:center;
+    }
+    .preview img{width:96px; height:96px; border-radius:10px; object-fit:cover; background:#0b1220}
+    .kv{display:grid; gap:4px; font-size:13px; color:#cbd5e1}
+    .kv b{color:#e5e7eb}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Ürün Bilgisi Paneli</h1>
+    <p class="sub">Bilgileri doldurup <b>Kaydet</b>’e bas — diğer sayfalar localStorage’dan otomatik okuyabilir.</p>
+
+    <div class="grid">
+      <div>
+        <label for="urunAdi">Ürün Adı</label>
+        <input id="urunAdi" type="text" placeholder="Örn: ONVO RX-05 Elektrikli Scooter" />
+      </div>
+
+      <div>
+        <label for="resimUrl">Resim URL’si</label>
+        <input id="resimUrl" type="url" placeholder="https://i.ibb.co/.../gorsel.jpg" />
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="fiyat">Fiyat (₺)</label>
+          <input id="fiyat" type="text" inputmode="decimal" placeholder="Örn: 11.499,90" />
+        </div>
+        <div>
+          <label for="iban">IBAN</label>
+          <input id="iban" type="text" placeholder="TR00 0000 0000 0000 0000 0000 00" />
+        </div>
+      </div>
+
+      <div>
+        <label for="adSoyad">Ad Soyad</label>
+        <input id="adSoyad" type="text" placeholder="Örn: Ali Demir" />
+      </div>
+
+      <div>
+        <label for="aciklamaKodu">Açıklama Kodu</label>
+        <input id="aciklamaKodu" type="text" placeholder="Örn: 51651968 (para gönderim açıklaması)" />
+      </div>
+
+      <div class="btns">
+        <button id="btnKaydet">Kaydet</button>
+        <button class="sec" id="btnTemizle" title="Kaydedilen veriyi sil">Temizle</button>
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <div class="preview" id="preview" hidden>
+        <img id="pImg" alt="Önizleme" />
+        <div class="kv">
+          <div><b>Ad:</b> <span id="pAd">—</span></div>
+          <div><b>Fiyat:</b> <span id="pFiyat">—</span></div>
+          <div><b>IBAN:</b> <span id="pIban">—</span></div>
+          <div><b>Ad Soyad:</b> <span id="pAdSoyad">—</span></div>
+          <div><b>Açıklama Kodu:</b> <span id="pKod">—</span></div>
+          <div style="color:#94a3b8">Resim kaynağı: <span id="pUrl">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const el = id => document.getElementById(id);
+
+    function formatPrice(v){
+      v = v.replace(/[^\d,]/g,'');
+      const parts = v.split(',');
+      if(parts.length > 2) v = parts[0] + ',' + parts.slice(1).join('');
+      return v;
+    }
+    function formatIban(v){
+      v = v.replace(/\s+/g,'').toUpperCase();
+      v = v.replace(/[^A-Z0-9]/g,'');
+      return v.replace(/(.{4})/g,'$1 ').trim();
+    }
+
+    function load(){
+      const raw = localStorage.getItem('urunBilgisi');
+      if(!raw) return;
+      try{
+        const d = JSON.parse(raw);
+        ['urunAdi','resimUrl','fiyat','iban','adSoyad','aciklamaKodu'].forEach(k=>{
+          el(k).value = d[k.replace('Url','resim')] || d[k] || '';
+        });
+        renderPreview(d);
+      }catch(e){}
+    }
+
+    function renderPreview(d){
+      const has = d && (d.ad || d.resim || d.fiyat || d.iban || d.adSoyad || d.aciklamaKodu);
+      el('preview').hidden = !has;
+      if(!has) return;
+      el('pAd').textContent = d.ad || '—';
+      el('pFiyat').textContent = d.fiyat || '—';
+      el('pIban').textContent = d.iban || '—';
+      el('pAdSoyad').textContent = d.adSoyad || '—';
+      el('pKod').textContent = d.aciklamaKodu || '—';
+      el('pUrl').textContent = d.resim || '—';
+      el('pImg').src = d.resim || '';
+    }
+
+    el('fiyat').addEventListener('input', e => e.target.value = formatPrice(e.target.value));
+    el('iban').addEventListener('input', e => e.target.value = formatIban(e.target.value));
+
+    el('btnKaydet').addEventListener('click', () => {
+      const ad    = el('urunAdi').value.trim();
+      const resim = el('resimUrl').value.trim();
+      const fiyat = el('fiyat').value.trim();
+      const iban  = el('iban').value.trim();
+      const adSoyad = el('adSoyad').value.trim();
+      const aciklamaKodu = el('aciklamaKodu').value.trim();
+
+      if(!ad || !resim || !fiyat || !iban || !adSoyad || !aciklamaKodu){
+        el('status').textContent = 'Lütfen tüm alanları doldurun.';
+        el('status').style.color = '#fca5a5';
+        return;
+      }
+
+      const data = { ad, resim, fiyat, iban, adSoyad, aciklamaKodu };
+      localStorage.setItem('urunBilgisi', JSON.stringify(data));
+      el('status').textContent = '✅ Kaydedildi. Diğer sayfalar localStorage’dan okuyabilir.';
+      el('status').style.color = '#86efac';
+      renderPreview(data);
+    });
+
+    el('btnTemizle').addEventListener('click', () => {
+      localStorage.removeItem('urunBilgisi');
+      el('status').textContent = '🗑️ Kayıt silindi.';
+      el('status').style.color = '#fca5a5';
+      ['urunAdi','resimUrl','fiyat','iban','adSoyad','aciklamaKodu'].forEach(id => el(id).value='');
+      el('preview').hidden = true;
+    });
+
+    load();
+  </script>
+</body>
+</html>

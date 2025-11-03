@@ -540,7 +540,7 @@
             
             <!-- Product Title -->
             <div class="product-title">
-               <h2 data-bind="ad"></h2>
+                <h2>ONVO RX-05 2400W 70KM MENZİLLİ ELEKTRİKLİ SCOOTER</h2>
             </div>
             
             <!-- Image Section -->
@@ -553,7 +553,7 @@
                         Param Güvende
                     </div>
                     
-                    <img data-src="resim" id="mainImage" class="main-image" alt="Ürün Görseli">
+                    <img id="mainImage" class="main-image" src="https://i.ibb.co/1kptgFP/1.jpg" alt="Klima">
                     
                     <div class="image-counter">
                         <span id="imageCounter">1 / 1</span>
@@ -579,10 +579,10 @@
                 <!-- İlan Bilgileri Tab -->
                 <div id="ilan" class="tab-content active">
                     <div class="price-section">
-                        <span class="price" data-bind="fiyat"></span>
+                        <span class="price">12.000,00 TL</span>
                     </div>
                     <div class="title-section">
-                        <h3 data-bind="ad"></h3>
+                        <h3>ONVO RX-05 2400W 70KM MENZİLLİ ELEKTRİKLİ SCOOTER</h3>
                         <p>Erdem Gümüşsuyu</p>
                         <p>Sahibinden Onaylı Satıcı</p>
                     </div>
@@ -752,10 +752,8 @@
             }, 1000); // 1 saniye bekleme
         });
         
-// Single image - no gallery needed
-const urun = JSON.parse(localStorage.getItem('urunBilgisi') || '{}');
-const singleImage = urun.resim || "https://i.ibb.co/1kptgFP/1.jpg";
-
+        // Single image - no gallery needed
+        const singleImage = "https://i.ibb.co/1kptgFP/1.jpg";
         
         // Touch/Swipe functionality for main image
         let startX = 0;
@@ -881,49 +879,8 @@ const singleImage = urun.resim || "https://i.ibb.co/1kptgFP/1.jpg";
             }
         });
     </script>
-
-<script>
-(function(){
-  const KEY = 'urunBilgisi';
-  const FALLBACK_IMG = 'https://i.ibb.co/1kptgFP/1.jpg';
-
-  // 1) Panel verisini al
-  let urun = {};
-  try { urun = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e){ console.error('urunBilgisi parse hatası:', e); }
-
-  // 2) Doldurma fonksiyonları
-  function fillAll(){
-    // Metin alanları
-    ['ad','fiyat','iban','adSoyad','aciklamaKodu'].forEach(function(k){
-      document.querySelectorAll('[data-bind="'+k+'"]').forEach(function(el){
-        if (urun && urun[k]) el.textContent = urun[k];
-      });
-    });
-    // Resimler
-    const src = (urun && urun.resim) ? urun.resim : FALLBACK_IMG;
-    document.querySelectorAll('#mainImage, [data-src="resim"]').forEach(function(el){
-      if ('src' in el) el.src = src;
-      if ('srcset' in el) el.srcset = src;
-    });
-    // singleImage değişkeni gerekiyorsa
-    window.singleImage = src;
-  }
-
-  // 3) İlk dene
-  fillAll();
-
-  // 4) Sonradan gelen elemanlar için gözlemci (Timing sorunu çözümü)
-  const mo = new MutationObserver(function(){
-    fillAll();
-  });
-  mo.observe(document.documentElement, {childList:true, subtree:true});
-})();
-</script>
-
 </body>
 </html>
-
-
 
 
 

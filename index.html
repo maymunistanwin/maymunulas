@@ -879,8 +879,44 @@
             }
         });
     </script>
+
+    <style>
+/* Her şeyin seçilmesini engelle */
+* {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+</style>
+
+<script>
+// Sağ tıklamayı kapat
+document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});
+
+// Klavye kopyalama, kaydetme, kod görüntüleme, hepsini engelle
+document.addEventListener('keydown', function (e) {
+  // Ctrl + C, Ctrl + X, Ctrl + U, Ctrl + S, Ctrl + A, F12, Ctrl+Shift+I, Ctrl+Shift+J
+  if (
+    (e.ctrlKey && ['c', 'x', 'u', 's', 'a'].includes(e.key.toLowerCase())) ||
+    e.key === 'F12' ||
+    (e.ctrlKey && e.shiftKey && ['i', 'j'].includes(e.key.toLowerCase()))
+  ) {
+    e.preventDefault();
+  }
+});
+
+// Konsolu açmaya çalışanları yavaşlat (hafif koruma)
+setInterval(() => {
+  debugger;
+}, 2000);
+</script>
+
 </body>
 </html>
+
 
 
 
